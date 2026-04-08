@@ -51,14 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. STATE MANAGEMENT (PORTAL TRANSITIONS) ---
     let currentState = 'hero';
-    let stateStack = ['hero'];
     const appContainer = document.getElementById('app-container');
 
-    window.switchState = function (targetState, isBack = false) {
+    // Initialize History State
+    history.replaceState({ state: 'hero' }, '', '');
+
+    window.switchState = function (targetState, isBackNavigation = false) {
         // Close menu if open (always unconditionally)
         document.body.classList.remove('menu-active');
 
-        if (targetState === currentState && !isBack) return;
+        if (targetState === currentState && !isBackNavigation) return;
 
         const states = document.querySelectorAll('.app-state');
         const targetElement = document.getElementById(`${targetState}-state`);
@@ -71,55 +73,57 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle transitions cleanly
         states.forEach(s => {
             s.classList.remove('active');
-            s.classList.remove('hidden-state'); // Cleanup any broken states
+            s.classList.remove('hidden-state'); 
         });
 
         appContainer.classList.remove(`state-${currentState}`);
         targetElement.classList.add('active');
         appContainer.classList.add(`state-${targetState}`);
 
-        // Blur the focused button so browser doesn't auto-scroll down to maintain focus
         if (document.activeElement) {
             document.activeElement.blur();
         }
 
-        // Mobile browsers (specifically Safari & Chrome Android) ignore sync scrolling during heavy layout recalculations
-        // We defer scroll resetting slightly so it fires explicitly AFTER the DOM repaints the new active state heights.
         const resetScroll = () => {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
             if (targetElement) targetElement.scrollTop = 0;
-
-            // Force reset any custom internal scroll containers as well
-            const scrollables = targetElement.querySelectorAll('.cards-grid, .gallery-grid, .folders-list, .services-state-content, .about-container');
-            scrollables.forEach(child => child.scrollTop = 0);
         };
 
-        // Fire immediately, and double-tap fire after 50ms layout settle time for stubborn mobile environments
         resetScroll();
         setTimeout(resetScroll, 10);
         setTimeout(resetScroll, 50);
 
         currentState = targetState;
 
-        // Handle Navigation Stack
-        if (targetState === 'hero') {
-            stateStack = ['hero'];
-        } else if (!isBack && stateStack[stateStack.length - 1] !== targetState) {
-            stateStack.push(targetState);
+        // Push to History API if this is a fresh navigation (not from back/popstate)
+        if (!isBackNavigation) {
+            history.pushState({ state: targetState }, '', '');
         }
     };
 
     window.goBack = function () {
-        if (stateStack.length > 1) {
-            stateStack.pop();
-            const prevState = stateStack[stateStack.length - 1];
-            window.switchState(prevState, true);
+        // Simply use browser history to go back
+        history.back();
+    };
+
+    // Listen for Back/Forward Button actions
+    window.addEventListener('popstate', (event) => {
+        // First check if a lightbox is open, if so close it
+        const lightbox = document.getElementById('lightbox-modal');
+        if (lightbox && lightbox.classList.contains('active')) {
+            window.closeLightbox(false); // Close without calling history.back()
+            return;
+        }
+
+        if (event.state && event.state.state) {
+            window.switchState(event.state.state, true);
         } else {
+            // Default to hero if no state found
             window.switchState('hero', true);
         }
-    };
+    });
 
 
     // --- 4. PORTFOLIO LOGIC (FOLDERS & GALLERIES) ---
@@ -366,14 +370,22 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = imgSrc;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Lock scroll
+
+        // Add a "virtual" lightbox state to history so back button can close it
+        history.pushState({ state: currentState, view: 'lightbox' }, '', '');
     };
 
-    window.closeLightbox = function () {
+    window.closeLightbox = function (triggerHistoryBack = true) {
         const modal = document.getElementById('lightbox-modal');
         if (!modal) return;
 
         modal.classList.remove('active');
         document.body.style.overflow = ''; // Unlock scroll
+
+        // Only go back in history if the close was triggered by user click (not back button)
+        if (triggerHistoryBack && history.state && history.state.view === 'lightbox') {
+            history.back();
+        }
     };
 
 
