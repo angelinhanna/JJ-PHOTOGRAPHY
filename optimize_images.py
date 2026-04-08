@@ -21,7 +21,7 @@ def backup_images(src_dir, backup_dir):
     shutil.copytree(src_dir, backup_dir)
     print("Backup complete.")
 
-def optimize_image(img_path, max_size=(2560, 2560), quality=85):
+def optimize_image(img_path, max_size=(1600, 1600), quality=75):
     try:
         with Image.open(img_path) as img:
             # Check if image needs resizing

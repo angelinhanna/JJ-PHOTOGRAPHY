@@ -1454,29 +1454,40 @@ html {
 }
 
 .lightbox-close {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    background: none;
-    border: none;
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 163, 115, 0.4);
     color: var(--accent);
-    font-size: 3rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
     cursor: pointer;
-    line-height: 1;
     transition: var(--transition-smooth);
-    z-index: 3001;
+    z-index: 3010;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
 .lightbox-close:hover {
-    transform: rotate(90deg) scale(1.2);
-    color: var(--text-cream);
+    background: var(--accent);
+    color: var(--bg-black);
+    transform: rotate(90deg) scale(1.1);
+    border-color: var(--accent);
 }
 
 @media (max-width: 768px) {
     .lightbox-close {
-        top: 1rem;
-        right: 1.5rem;
-        font-size: 2.5rem;
+        top: 60px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
     }
 }
 

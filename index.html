@@ -32,8 +32,6 @@
                 <div class="logo">JJ PHOTOGRAPHY</div>
             </div>
             <div class="nav-extra">
-                <a href="#" class="home-nav-btn" onclick="switchState('hero')" title="Go Home"><i
-                        class="fas fa-home"></i></a>
                 <a href="#" class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></a>
                 <div class="hamburger-container" onclick="toggleMenu()">
                     <span class="hamburger-line"></span>
@@ -371,8 +369,10 @@
 
     </div>
     <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox()">
-        <button class="lightbox-close">&times;</button>
-        <div class="lightbox-content">
+        <button class="lightbox-close" onclick="closeLightbox(); event.stopPropagation();">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
             <img id="lightbox-img" src="" alt="Full View">
         </div>
     </div>
