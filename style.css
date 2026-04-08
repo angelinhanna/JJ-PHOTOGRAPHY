@@ -1410,7 +1410,7 @@ html {
     height: 100vh;
     background: rgba(0, 0, 0, 0.98);
     backdrop-filter: blur(15px);
-    z-index: 3000;
+    z-index: 11000; /* Must be above the fixed navbar (10000) */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1455,7 +1455,7 @@ html {
 
 .lightbox-close {
     position: fixed;
-    top: 80px;
+    top: 120px;
     right: 30px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -1470,7 +1470,7 @@ html {
     font-size: 1.5rem;
     cursor: pointer;
     transition: var(--transition-smooth);
-    z-index: 3010;
+    z-index: 12000;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
@@ -1483,7 +1483,7 @@ html {
 
 @media (max-width: 768px) {
     .lightbox-close {
-        top: 60px;
+        top: 100px;
         right: 20px;
         width: 50px;
         height: 50px;
