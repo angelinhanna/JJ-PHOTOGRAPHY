@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJ Photography - Wedding & Event Photography | Jestin Joseph</title>
+    <meta name="description"
+        content="JJ Photography by Jestin Joseph - Professional wedding and event photography specializing in capturing timeless moments. Services include weddings, engagement, naming ceremonies, maternity shoots, baptisms, and birthday events.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+</head>
+
+<body>
+    <div id="loader">
+        <div class="gold-line"></div>
+    </div>
+
+    <div id="app-container" class="state-hero">
+        <nav class="main-nav">
+            <div class="brand-container">
+                <div class="brand-logo-wrapper">
+                    <img src="logo.png" alt="Logo" class="brand-logo-img">
+                </div>
+                <div class="logo">JJ PHOTOGRAPHY</div>
+            </div>
+            <div class="nav-extra">
+                <a href="#" class="home-nav-btn" onclick="switchState('hero')" title="Go Home"><i
+                        class="fas fa-home"></i></a>
+                <a href="#" class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></a>
+                <div class="hamburger-container" onclick="toggleMenu()">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </div>
+            </div>
+        </nav>
+        <div id="menu-overlay" class="menu-overlay">
+            <button class="menu-close" onclick="toggleMenu()">&times;</button>
+            <div class="menu-content">
+                <a href="#" onclick="switchState('hero')">Home</a>
+                <a href="#" onclick="switchState('about')">About Me</a>
+                <a href="#" onclick="switchState('services')">Services</a>
+                <a href="#" onclick="switchState('grid')">Portfolio</a>
+                <a href="#" onclick="switchState('testimonials')">Testimonials</a>
+                <a href="#" onclick="switchState('contact')">Contact</a>
+            </div>
+        </div>
+        <section id="hero-state" class="app-state active">
+            <div class="hero-image-container">
+                <img src="hero-bg.jpeg" alt="Cinematic Camera" class="hero-bg">
+                <div class="hero-overlay"></div>
+            </div>
+
+            <div class="hero-content-wrapper">
+                <div class="hero-text">
+                    <h1 class="reveal-text">Capturing <span class="gold-text">Essence</span></h1>
+                    <p class="reveal-text-slow">Premium Photography & Visual Storytelling</p>
+                </div>
+                <div class="portal-menu">
+                    <button class="portal-btn" onclick="switchState('about')">
+                        About Me
+                    </button>
+                    <button class="portal-btn" onclick="switchState('services')">
+                        My Services
+                    </button>
+                    <button class="portal-btn" onclick="switchState('grid')">
+                        Explore Work
+                    </button>
+                    <button class="portal-btn" onclick="switchState('testimonials')">
+                        Client Stories
+                    </button>
+                    <button class="portal-btn" onclick="switchState('contact')">
+                        Get In Touch
+                    </button>
+                </div>
+                <div class="scroll-hint">
+                    <p>Scroll for Dashboard</p>
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+            </div>
+            <div class="hero-dashboard-scrollable">
+                <div class="dashboard-section">
+                    <h2 class="gold-text">Command Center</h2>
+                    <div class="dashboard-grid">
+                        <div class="dash-box">
+                            <h3>Quick Access</h3>
+                            <a href="#" onclick="switchState('about')">Profile</a>
+                            <a href="#" onclick="switchState('services')">Our Expertise</a>
+                            <a href="#" onclick="switchState('grid')">Visual Vault</a>
+                        </div>
+                        <div class="dash-box">
+                            <h3>Reach Me</h3>
+                            <a href="tel:+919742577904" class="dash-contact"><i class="fas fa-phone-alt"></i> +91
+                                9742577904</a>
+                            <a href="mailto:capturethemomentzz693@gmail.com" class="dash-contact"><i
+                                    class="far fa-envelope"></i> capturethemomentzz693@gmail.com</a>
+                            <a href="#" class="dash-contact"><i class="fas fa-map-marker-alt"></i> Bangalore, India</a>
+                        </div>
+                        <div class="dash-box">
+                            <h3>Social Hub</h3>
+                            <div class="dash-social">
+                                <a
+                                    href="https://www.instagram.com/_capture_the_momentzz_?utm_source=qr&igsh=MXV2NGJ0OXZ5bDh1ZQ=="><i
+                                        class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="bottom-strip">
+                    <div class="copyright-strip">
+                        © 2025 JJ PHOTOGRAPHY | DESIGNED FOR EXCELLENCE
+                    </div>
+                </footer>
+            </div>
+        </section>
+        <section id="grid-state" class="app-state">
+            <div class="folder-header">
+                <h2 class="gold-text">Portfolio</h2>
+                <p
+                    style="opacity: 0.85; margin-top: 0.5rem; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;">
+                    A Collection of Visual Stories</p>
+            </div>
+            <div class="cards-grid">
+                <div class="category-card" onclick="enterFolder('Wedding')">
+                    <div class="card-bg" style="background-image: url('images/Wedding/Arhana&Megh/RJ-351.jpg');"></div>
+                    <div class="card-content">
+                        <h3>Wedding</h3>
+                    </div>
+                </div>
+
+                <div class="category-card" onclick="enterFolder('Pre-Wedding')">
+                    <div class="card-bg" style="background-image: url('images/Pre-Wedding/pre1/DSC00225 (1).jpg');">
+                    </div>
+                    <div class="card-content">
+                        <h3>Pre-Wedding</h3>
+                    </div>
+                </div>
+                <div class="category-card" onclick="enterFolder('Bachelor Party')">
+                    <div class="card-bg" style="background-image: url('images/Bachelor Party/ft.Rani/DSC00297.jpg');">
+                    </div>
+                    <div class="card-content">
+                        <h3>Bachelor Party</h3>
+                    </div>
+                </div>
+
+                <div class="category-card" onclick="enterFolder('Baby Shower')">
+                    <div class="card-bg" style="background-image: url('images/Baby Shower/Ganesha/IMG_5715 (1).jpg');">
+                    </div>
+                    <div class="card-content">
+                        <h3>Baby Shower</h3>
+                    </div>
+                </div>
+                <div class="category-card" onclick="enterFolder('Maternity Shoot')">
+                    <div class="card-bg"
+                        style="background-image: url('images/Maternity Shoot/Manju/20251115_160751 (2).jpg');"></div>
+                    <div class="card-content">
+                        <h3>Maternity Shoot</h3>
+                    </div>
+                </div>
+                <div class="category-card" onclick="enterFolder('Portraits')">
+                    <div class="card-bg" style="background-image: url('wedd.jpg'); filter: brightness(0.5);"></div>
+                    <div class="card-content">
+                        <h3>Portraits</h3>
+                    </div>
+                </div>
+                <div class="category-card" onclick="enterFolder('Naming Ceremony')">
+                    <div class="card-bg"
+                        style="background-image: url('images/Naming Ceremony/Traditional Ceremony/20251115_160847 (1).jpg');">
+                    </div>
+                    <div class="card-content">
+                        <h3>Naming Ceremony</h3>
+                    </div>
+                </div>
+                <div class="category-card" onclick="enterFolder('Other Events')">
+                    <div class="card-bg" style="background-image: url('hw.jpg');"></div>
+                    <div class="card-content">
+                        <h3>Other Events</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="section-cta-container">
+                <button class="cta-portal-btn" onclick="switchState('testimonials')">
+                    Read Client Stories <i class="fas fa-star"></i>
+                </button>
+            </div>
+        </section>
+        <section id="about-state" class="app-state">
+            <div class="about-container">
+                <div class="about-split">
+                    <div class="about-left">
+                        <div class="about-img-frame">
+                            <img src="aboutpic.jpg" alt="Jestin Joseph">
+                        </div>
+                    </div>
+                    <div class="about-right">
+                        <h2 class="gold-text">The Story Behind The Lens</h2>
+                        <p class="story-p">Photography is not just about taking pictures; it's about freezing a moment
+                            in time that tells a thousands stories. I am Jestin Joseph, and I believe in the magic of
+                            authentic emotions.</p>
+                        <p class="story-p">With a focus on light, perspective, and genuine emotions, I aim to create
+                            visuals that feel natural and timeless</p>
+                        <div class="section-cta-container">
+                            <button class="cta-portal-btn" onclick="switchState('services')">
+                                Discover My Services <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="services-state" class="app-state">
+            <div class="services-state-content">
+                <div class="services-3x3-header">
+                    <h2 class="gold-text">My Services</h2>
+                    <p>Tailored Excellence for Every Occasion</p>
+                </div>
+                <div class="services-3x3-grid">
+                    <div class="service-glowing-card" onclick="expandService('Wedding')">
+                        <div class="service-icon-box"><i class="fas fa-heart"></i></div>
+                        <h3>Wedding</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+                    <div class="service-glowing-card" onclick="expandService('Engagement')">
+                        <div class="service-icon-box"><i class="fas fa-ring"></i></div>
+                        <h3>Engagement</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+                    <div class="service-glowing-card" onclick="expandService('Pre Wedding')">
+                        <div class="service-icon-box"><i class="fas fa-heart"></i></div>
+                        <h3>Pre Wedding</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+                    <div class="service-glowing-card" onclick="expandService('Baptism')">
+                        <div class="service-icon-box"><i class="fas fa-dove"></i></div>
+                        <h3>Baptism</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+                    <div class="service-glowing-card" onclick="expandService('Baby Shower')">
+                        <div class="service-icon-box"><i class="fas fa-child"></i></div>
+                        <h3>Baby Shower</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+                    <div class="service-glowing-card" onclick="expandService('Maternity Shoot')">
+                        <div class="service-icon-box"><i class="fas fa-ellipsis-h"></i></div>
+                        <h3>Maternity Shoot</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+                    <div class="service-glowing-card" onclick="expandService('Portraits')">
+                        <div class="service-icon-box"><i class="fas fa-camera-retro"></i></div>
+                        <h3>Portraits</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+
+
+                    <div class="service-glowing-card" onclick="expandService('Other Events')">
+                        <div class="service-icon-box"><i class="fas fa-calendar-star"></i></div>
+                        <h3>Other Events</h3>
+                        <div class="hover-reveal">View Details</div>
+                    </div>
+                </div>
+                <div class="section-cta-container">
+                    <button class="cta-portal-btn" onclick="switchState('grid')">
+                        Explore Portfolio <i class="fas fa-images"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section id="contact-state" class="app-state">
+            <div class="contact-portal-content">
+                <h2 class="gold-text">Get In Touch</h2>
+                <form id="contact-form" class="premium-contact-form">
+                    <div class="form-row">
+                        <input type="text" name="user_name" placeholder="Your Name" required>
+                        <input type="email" name="user_email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-row">
+                        <select id="event_type_select" name="event_type" required>
+                            <option value="" disabled selected>Select Event Type</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="engagement">Engagement</option>
+                            <option value="Pre Wedding">Pre Wedding</option>
+                            <option value="Birthday">Birthday</option>
+                            <option value="Baby Shower">Baby Shower</option>
+                            <option value="Maternity">Maternity</option>
+                            <option value="Baptism">Baptism</option>
+                            <option value="other">Other Event</option>
+                        </select>
+                        <input type="text" id="event_date" name="event_date" placeholder="Select Event Date" required>
+                    </div>
+                    <input type="text" id="other_event_input" name="other_event" placeholder="Please specify your event"
+                        style="display: none;" class="other-event-box">
+                    <textarea name="message" placeholder="Your Message" rows="3" required></textarea>
+                    <button type="submit" id="submit-btn" class="submit-portal-btn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loader"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                    <p class="direct-wa-hint"><i class="fab fa-whatsapp"></i> Inquiry will open in WhatsApp DMs</p>
+                    <div id="form-status" class="form-status"></div>
+                </form>
+
+                <div class="social-contact-strip">
+                    <p>Or Reach Me Directly</p>
+                    <div class="social-links-grid">
+                        <a href="https://wa.me/919742577904" target="_blank" class="social-link-box">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://www.instagram.com/_capture_the_momentzz_?utm_source=qr&igsh=MXV2NGJ0OXZ5bDh1ZQ=="
+                            target="_blank" class="social-link-box">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram DM</span>
+                        </a>
+                        <a href="mailto:capturethemomentzz693@gmail.com" class="social-link-box">
+                            <i class="far fa-envelope"></i>
+                            <span>Direct Email</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="testimonials-state" class="app-state">
+            <div class="testimonials-portal-content">
+                <h2 class="gold-text">Client Opinions</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>"Jestin has a magical way of capturing emotions. Our pre-wedding photos look like they're
+                            straight out of a luxury magazine."</p>
+                        <div class="testi-author">
+                            <span>- Rincy & Anu</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>"Professional, creative, and extremely patient. The portraits he took for our naming ceremony
+                            are timeless treasures. Highly recommended!"</p>
+                        <div class="testi-author">
+                            <span>- Liju & Manju</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-cta-container">
+                    <button class="cta-portal-btn" onclick="switchState('contact')">
+                        Book Your Session <i class="fas fa-calendar-check"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section id="folder-state" class="app-state">
+            <div class="folder-header">
+                <h2 id="current-category">Category</h2>
+            </div>
+            <div class="folders-list" id="folders-container">
+            </div>
+        </section>
+        <section id="gallery-state" class="app-state">
+            <div class="gallery-header">
+                <h2 id="current-folder">Client Folder</h2>
+            </div>
+            <div class="gallery-grid" id="gallery-container">
+            </div>
+        </section>
+
+    </div>
+    <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox()">
+        <button class="lightbox-close">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Full View">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Events - JJ Photography</title>
+    <meta name="description" content="Explore our featured wedding and event photography collections">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Custom CSS for Featured Events Page -->
+    <style>
+        .featured-events-hero {
+            background: linear-gradient(135deg, #C8A96A, #EAD8B5);
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .featured-events-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .featured-events-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .events-container {
+            padding: 80px 0;
+            background: var(--bg-primary);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .event-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(200, 169, 106, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(200, 169, 106, 0.2);
+            border-color: var(--border-gold);
+        }
+
+        .event-image {
+            height: 220px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-content h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .event-date {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-photos-preview {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .preview-photo {
+            flex: 1;
+            height: 60px;
+            background: rgba(200, 169, 106, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--gradient-gold);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(200, 169, 106, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back Button -->
+    <a href="index.html#portfolio" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Portfolio
+    </a>
+
+    <!-- Featured Events Hero -->
+
+    <section class="featured-events-hero">
+        <div class="container">
+            <h1>Featured Events</h1>
+            <p>Celebrating special moments with wonderful people through our lens</p>
+        </div>
+    </section>
+    <!--
+    
+    <section class="events-container">
+        <div class="container">
+            <div class="events-grid">
+                
+                <div class="event-card" onclick="openPersonGallery('sarah-john-wedding')">
+                    <div class="event-image">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Sarah & John</h3>
+                        <p class="event-date">December 15, 2023</p>
+                        <p class="event-description">Wedding Photography - A beautiful celebration of love and union.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-heart"></i></div>
+                            <div class="preview-photo"><i class="fas fa-ring"></i></div>
+                            <div class="preview-photo"><i class="fas fa-camera"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="event-card" onclick="openPersonGallery('emily-michael-engagement')">
+                    <div class="event-image">
+                        <i class="fas fa-ring"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Emily & Michael</h3>
+                        <p class="event-date">November 20, 2023</p>
+                        <p class="event-description">Engagement Session - Romantic moments captured in golden hour.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-ring"></i></div>
+                            <div class="preview-photo"><i class="fas fa-heart"></i></div>
+                            <div class="preview-photo"><i class="fas fa-sun"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="event-card" onclick="openPersonGallery('anna-birthday')">
+                    <div class="event-image">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Anna</h3>
+                        <p class="event-date">October 10, 2023</p>
+                        <p class="event-description">30th Birthday Celebration - Joyful moments with friends and family.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-birthday-cake"></i></div>
+                            <div class="preview-photo"><i class="fas fa-gift"></i></div>
+                            <div class="preview-photo"><i class="fas fa-music"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="event-card" onclick="openPersonGallery('emma-baptism')">
+                    <div class="event-image">
+                        <i class="fas fa-cross"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Baby Emma</h3>
+                        <p class="event-date">August 20, 2023</p>
+                        <p class="event-description">Baptism Ceremony - A blessed beginning with family and friends.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-cross"></i></div>
+                            <div class="preview-photo"><i class="fas fa-water"></i></div>
+                            <div class="preview-photo"><i class="fas fa-baby"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="event-card" onclick="openPersonGallery('rachel-maternity')">
+                    <div class="event-image">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Rachel</h3>
+                        <p class="event-date">July 15, 2023</p>
+                        <p class="event-description">Mom-to-Be Shoot - Celebrating the beauty of motherhood.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-female"></i></div>
+                            <div class="preview-photo"><i class="fas fa-heart"></i></div>
+                            <div class="preview-photo"><i class="fas fa-baby"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="event-card" onclick="openPersonGallery('james-baptism')">
+                    <div class="event-image">
+                        <i class="fas fa-cross"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Baby James</h3>
+                        <p class="event-date">June 10, 2023</p>
+                        <p class="event-description">Baptism Ceremony - Sacred moments and family blessings.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-cross"></i></div>
+                            <div class="preview-photo"><i class="fas fa-water"></i></div>
+                            <div class="preview-photo"><i class="fas fa-pray"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="event-card" onclick="openPersonGallery('emily-robert-wedding')">
+                    <div class="event-image">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Emily & Robert</h3>
+                        <p class="event-date">November 28, 2023</p>
+                        <p class="event-description">Wedding Photography - Traditional church ceremony and reception.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-heart"></i></div>
+                            <div class="preview-photo"><i class="fas fa-church"></i></div>
+                            <div class="preview-photo"><i class="fas fa-ring"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="event-card" onclick="openPersonGallery('jessica-david-engagement')">
+                    <div class="event-image">
+                        <i class="fas fa-ring"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Jessica & David</h3>
+                        <p class="event-date">October 15, 2023</p>
+                        <p class="event-description">Engagement Session - Lakeside romance at sunset.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-ring"></i></div>
+                            <div class="preview-photo"><i class="fas fa-water"></i></div>
+                            <div class="preview-photo"><i class="fas fa-heart"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card" onclick="openPersonGallery('michael-birthday')">
+                    <div class="event-image">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <div class="event-content">
+                        <h3>Michael</h3>
+                        <p class="event-date">September 5, 2023</p>
+                        <p class="event-description">25th Birthday Celebration - DJ party and dance night.</p>
+                        <div class="event-photos-preview">
+                            <div class="preview-photo"><i class="fas fa-birthday-cake"></i></div>
+                            <div class="preview-photo"><i class="fas fa-music"></i></div>
+                            <div class="preview-photo"><i class="fas fa-users"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>JJ Photography</h3>
+                    <p class="footer-tagline">Capturing Timeless Moments</p>
+                    <p>Professional wedding and event photography that tells your unique story with artistic vision and
+                        heartfelt emotion.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#portfolio">Portfolio</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="featured-events.html">Wedding Photography</a></li>
+                        <li><a href="featured-events.html">Engagement Sessions</a></li>
+                        <li><a href="featured-events.html">Birthday Events</a></li>
+                        <li><a href="featured-events.html">All Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 JJ Photography. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Event Gallery Modal -->
+    <div id="eventGalleryModal" class="event-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeEventGallery()">&times;</button>
+            <div class="modal-header">
+                <h3 id="galleryTitle">Event Gallery</h3>
+                <p id="gallerySubtitle">Featured Collections</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-photo-grid" id="galleryPhotoGrid">
+                    <!-- Photos will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/featured-events.js"></script>
+</body>
+
+</html>
