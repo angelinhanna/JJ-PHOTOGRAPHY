@@ -50,11 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 4. STATE MANAGEMENT (PORTAL TRANSITIONS) ---
-    let currentState = 'hero';
+    const validStates = ['hero', 'about', 'services', 'grid', 'testimonials', 'contact', 'folder', 'gallery'];
+    const getStateFromHash = () => {
+        const hashState = window.location.hash.replace('#', '').trim().toLowerCase();
+        return validStates.includes(hashState) ? hashState : 'hero';
+    };
+
+    let currentState = getStateFromHash();
     const appContainer = document.getElementById('app-container');
 
     // Initialize History State
-    history.replaceState({ state: 'hero' }, '', '');
+    history.replaceState({ state: currentState }, '', `#${currentState}`);
 
     window.switchState = function (targetState, isBackNavigation = false) {
         // Close menu if open (always unconditionally)
@@ -69,6 +75,17 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(`State ${targetState} not found`);
             return;
         }
+
+        // Highlight active menu links
+        const navLinks = document.querySelectorAll('.nav-links a, .menu-content a');
+        navLinks.forEach(link => {
+            // Check if the link's onclick contains the switchState call with targetState
+            if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(`switchState('${targetState}')`)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
 
         // Handle transitions cleanly
         states.forEach(s => {
@@ -88,20 +105,30 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
+            if (appContainer) appContainer.scrollTop = 0;
             if (targetElement) targetElement.scrollTop = 0;
         };
 
         resetScroll();
         setTimeout(resetScroll, 10);
         setTimeout(resetScroll, 50);
+        setTimeout(resetScroll, 100); // Extra safety for mobile transitions
 
         currentState = targetState;
 
         // Push to History API if this is a fresh navigation (not from back/popstate)
         if (!isBackNavigation) {
-            history.pushState({ state: targetState }, '', '');
+            history.pushState({ state: targetState }, '', `#${targetState}`);
         }
     };
+
+    // Initialize initial state highlight
+    const initialNavLinks = document.querySelectorAll('.nav-links a, .menu-content a');
+    initialNavLinks.forEach(link => {
+        if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(`switchState('${currentState}')`)) {
+            link.classList.add('active');
+        }
+    });
 
     window.goBack = function () {
         // Simply use browser history to go back
@@ -120,245 +147,140 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.state && event.state.state) {
             window.switchState(event.state.state, true);
         } else {
-            // Default to hero if no state found
-            window.switchState('hero', true);
+            // Fallback to hash if available, otherwise hero
+            window.switchState(getStateFromHash(), true);
         }
     });
 
+    // Apply initial state from URL hash on first load
+    if (currentState !== 'hero') {
+        window.switchState(currentState, true);
+    }
 
-    // --- 4. PORTFOLIO LOGIC (FOLDERS & GALLERIES) ---
-    const portfolioData = {
-        "Baby Shower": [
-            {
-                "id": "bab_ganesha",
-                "name": "GANESHA",
-                "thumb": "images/Baby Shower/Ganesha/IMG_5715 (1).jpg",
-                "images": [
-                    "images/Baby Shower/Ganesha/IMG_5715 (1).jpg",
-                    "images/Baby Shower/Ganesha/IMG_5785.jpg",
-                    "images/Baby Shower/Ganesha/IMG_5987.jpg",
-                    "images/Baby Shower/Ganesha/IMG_6046.jpg",
-                    "images/Baby Shower/Ganesha/IMG_6067.jpg",
-                    "images/Baby Shower/Ganesha/IMG_6668 (1) (1) - Copy.jpg"
-                ]
-            },
-            {
-                "id": "bab_liju_manju",
-                "name": "LIJU&MANJU",
-                "thumb": "images/Baby Shower/Liju&Manju/20251115_160847 (1).jpg",
-                "images": [
-                    "images/Baby Shower/Liju&Manju/20251115_160847 (1).jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_7831 - Copy.jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_7855.jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_7889.jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_7908.jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_7911 - Copy.jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_7932 (1).jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_7948 - Copy.jpg",
-                    "images/Baby Shower/Liju&Manju/IMG_8103 - Copy.jpg"
 
-                ]
-            },
-            {
-                "id": "bab_siju_bency",
-                "name": "SIJU&BENCY",
-                "thumb": "images/Baby Shower/Siju&Bency/JJ-109.JPG",
-                "images": [
-                    "images/Baby Shower/Siju&Bency/JJ-109.JPG",
-                    "images/Baby Shower/Siju&Bency/JJ-116.JPG",
-                    "images/Baby Shower/Siju&Bency/JJ-117.JPG",
-                    "images/Baby Shower/Siju&Bency/JJ-125.JPG",
-                    "images/Baby Shower/Siju&Bency/JJ-82.JPG",
-                    "images/Baby Shower/Siju&Bency/JJ-88.JPG",
-                    "images/Baby Shower/Siju&Bency/JJ-94.JPG"
-                ]
-            }
-        ],
-        "Bachelor Party": [
-            {
-                "id": "bac_ft.rani",
-                "name": "FT.RANI",
-                "thumb": "images/Bachelor Party/ft.Rani/DSC00297.jpg",
-                "images": [
-                    "images/Bachelor Party/ft.Rani/DSC00297.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00307.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00310.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00633.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00767.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00797.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00818.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00845.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC00953.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC01007.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC01040.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC01079.jpg",
-                    "images/Bachelor Party/ft.Rani/DSC01148.jpg"
-                ]
-            }
-        ],
-        "Maternity Shoot": [
-            {
-                "id": "mat_manju",
-                "name": "MANJU",
-                "thumb": "images/Maternity Shoot/Manju/20251115_160751 (2).jpg",
-                "images": [
-                    "images/Maternity Shoot/Manju/20251115_160751 (2).jpg",
-                    "images/Maternity Shoot/Manju/20251115_160847 (1).jpg",
-                    "images/Maternity Shoot/Manju/20251115_161324 (1).jpg",
-                    "images/Maternity Shoot/Manju/20251115_161500.jpg",
-                    "images/Maternity Shoot/Manju/IMG_8124.jpg"
-                ]
-            }
-        ],
-        "Naming Ceremony": [
-            {
-                "id": "nam_traditional_ceremony",
-                "name": "RUAH MIRIAM LIJU",
-                "thumb": "images/Naming Ceremony/Traditional Ceremony/20251115_160847 (1).jpg",
-                "images": [
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260722.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260733.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260761 (1).jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260777.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260186.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260198 (1).jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260213.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260241.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260296.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260361.jpg",
-                    "images/Naming Ceremony/Traditional Ceremony/RJ260442.jpg"
-                ]
-            }
-        ],
-        "Portraits": [],
-        "Pre-Wedding": [
-            {
-                "id": "pre_pre1",
-                "name": "FEMI",
-                "thumb": "images/Pre-Wedding/pre1/DSC00225 (1).jpg",
-                "images": [
-                    "images/Pre-Wedding/pre1/DSC00225 (1).jpg",
-                    "images/Pre-Wedding/pre1/DSC00232 (1).jpg",
-                    "images/Pre-Wedding/pre1/DSC00234 (1).jpg",
-                    "images/Pre-Wedding/pre1/DSC00242.jpg",
-                    "images/Pre-Wedding/pre1/DSC00250.jpg",
-                    "images/Pre-Wedding/pre1/DSC00285 (1).jpg",
-                    "images/Pre-Wedding/pre1/DSC00287.jpg",
-                    "images/Pre-Wedding/pre1/DSC00540.jpg",
-                    "images/Pre-Wedding/pre1/DSC00634 (1).jpg",
-                    "images/Pre-Wedding/pre1/DSC00669.jpg"
-                ]
-            },
-            {
-                "id": "pre_pre2",
-                "name": "RINCY&ANU",
-                "thumb": "images/Pre-Wedding/pre2/20250630_130620.jpg",
-                "images": [
-                    "images/Pre-Wedding/pre2/20250630_130620.jpg",
-                    "images/Pre-Wedding/pre2/20250630_130703.jpg",
-                    "images/Pre-Wedding/pre2/20250630_131404.jpg",
-                    "images/Pre-Wedding/pre2/20250630_132310.jpg",
-                    "images/Pre-Wedding/pre2/20250630_132737.jpg",
-                    "images/Pre-Wedding/pre2/20250630_143232 (2).jpg",
-                    "images/Pre-Wedding/pre2/20250630_143232.jpg",
-                    "images/Pre-Wedding/pre2/20250630_161235.jpg",
-                    "images/Pre-Wedding/pre2/20250630_162857.jpg"
-                ]
-            }
-        ],
-        "Wedding": [
-            {
-                "id": "wed_arhana_megh",
-                "name": "ARHANA&MEGH",
-                "thumb": "images/Wedding/Arhana&Megh/RJ-351.jpg",
-                "images": [
-                    "images/Wedding/Arhana&Megh/RJ-402 (1).JPG",
-                    "images/Wedding/Arhana&Megh/RJ-383.JPG",
-                    "images/Wedding/Arhana&Megh/RJ-380 (1).JPG",
-                    "images/Wedding/Arhana&Megh/RJ-379 (1).JPG",
-                    "images/Wedding/Arhana&Megh/RJ-382.JPG",
-                    "images/Wedding/Arhana&Megh/RJ-410.JPG",
-                    "images/Wedding/Arhana&Megh/RJ-416.JPG",
-                    "images/Wedding/Arhana&Megh/RJ-351.jpg",
-                    "images/Wedding/Arhana&Megh/RJ-359.jpg",
-                    "images/Wedding/Arhana&Megh/RJ-380.jpg",
-                    "images/Wedding/Arhana&Megh/RJ-377.jpg",
-                    "images/Wedding/Arhana&Megh/RJ-379.jpg"
-                ]
-            },
-            {
-                "id": "wed_jenson_grace",
-                "name": "JENSON&GRACE",
-                "thumb": "images/Wedding/Jenson Grace/IMG_4272.jpg",
-                "images": [
-                    "images/Wedding/Jenson Grace/IMG_5402.jpg",
-                    "images/Wedding/Jenson Grace/IMG_4272.jpg",
-                    "images/Wedding/Jenson Grace/IMG_5275.jpg",
-                    "images/Wedding/Jenson Grace/IMG_4659.jpg",
-                    "images/Wedding/Jenson Grace/IMG_4302.jpg",
-                    "images/Wedding/Jenson Grace/IMG_4540.jpg",
-                    "images/Wedding/Jenson Grace/IMG_4781.jpg",
-                    "images/Wedding/Jenson Grace/IMG_5230.jpg",
-                    "images/Wedding/Jenson Grace/IMG_5567.jpg"
-                ]
-            }
-        ],
-        "Other Events": []
+    // --- 4. PORTFOLIO CONFIGURATION ---
+    const CLOUD_NAME = "dlwevdqsf"; // <-- AUTOMATICALLY UPDATED
+
+    window.loadGallery = function(category, folderId) {
+        console.log(`Loading gallery for category: ${category}`);
+        
+        const galleryContainer = document.getElementById('gallery-container');
+        const folderTitle = document.getElementById('current-folder');
+        
+        if (!galleryContainer || !folderTitle) return;
+        
+        // Update title
+        folderTitle.textContent = category;
+        
+        // Show loading state
+        galleryContainer.innerHTML = `
+            <div class="gallery-loader" style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 1rem; opacity: 0.7;">Loading beautiful memories...</p>
+            </div>
+        `;
+        
+        // Switch to gallery state
+        window.switchState('gallery');
+        
+        // Load images with optimizations
+        setTimeout(() => {
+            // Normalize tag for Cloudinary (lowercase, no spaces)
+            const tag = category.toLowerCase().replace(/\s+/g, '-') + '-gallery';
+            const cacheBuster = Date.now();
+            const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/list/${tag}.json?_=${cacheBuster}`;
+            
+            console.log(`Fetching from Cloudinary: ${url}`);
+            
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    const images = data.resources || [];
+                    console.log(`Found ${images.length} images for ${category}`);
+                    
+                    if (images.length === 0) {
+                        galleryContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; opacity: 0.5;">No photos uploaded to ${category} yet.</p>`;
+                        return;
+                    }
+                    
+                    // Optimized image loading with thumbnails and progressive enhancement
+                    let html = '';
+                    images.forEach((img, index) => {
+                        // Generate optimized image URLs
+                        const thumbnailUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_300,h_300,c_fill,q_auto,f_auto/${img.public_id}.${img.format}`;
+                        const fullSizeUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,h_1200,c_limit,q_auto,f_auto/${img.public_id}.${img.format}`;
+                        
+                        html += `
+                            <div class="gallery-item" onclick="event.stopPropagation(); window.openLightbox('${fullSizeUrl}')" style="animation-delay: ${index * 0.1}s">
+                                <div class="gallery-placeholder"></div>
+                                <img 
+                                    src="${thumbnailUrl}" 
+                                    data-src="${fullSizeUrl}"
+                                    loading="lazy" 
+                                    decoding="async" 
+                                    alt="Gallery Photo"
+                                    onload="this.previousElementSibling.style.display='none'; this.style.opacity='1';"
+                                    onerror="this.style.display='none'; this.previousElementSibling.innerHTML='<i style=\\'color: #666; font-size: 2rem;\\' class=\\'fas fa-exclamation-triangle\\'></i>';"
+                                >
+                            </div>
+                        `;
+                    });
+                    
+                    galleryContainer.innerHTML = html;
+                    
+                    // Implement intersection observer for even better performance
+                    if ('IntersectionObserver' in window) {
+                        const imageObserver = new IntersectionObserver((entries, observer) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    const img = entry.target;
+                                    img.style.opacity = '0';
+                                    img.style.transition = 'opacity 0.3s ease';
+                                    
+                                    // Load higher quality image when in view
+                                    if (img.dataset.src && img.src !== img.dataset.src) {
+                                        const tempImg = new Image();
+                                        tempImg.onload = () => {
+                                            img.src = img.dataset.src;
+                                            img.style.opacity = '1';
+                                        };
+                                        tempImg.src = img.dataset.src;
+                                    }
+                                    
+                                    observer.unobserve(img);
+                                }
+                            });
+                        });
+                        
+                        document.querySelectorAll('.gallery-item img').forEach(img => {
+                            imageObserver.observe(img);
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.error("Cloudinary Fetch Error:", err);
+                    galleryContainer.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                            <p style="color: #ff6b6b; margin-bottom: 1rem;">Unable to load gallery.</p>
+                            <p style="font-size: 0.7rem; opacity: 0.6;">Please check your connection and try again.</p>
+                        </div>
+                    `;
+                });
+        }, 500); // Small delay for smooth transition
     };
 
-    window.enterFolder = function (category) {
-        const foldersContainer = document.getElementById('folders-container');
-        const categoryTitle = document.getElementById('current-category');
-
-        if (!foldersContainer || !categoryTitle) return;
-
-        categoryTitle.innerText = category;
-        foldersContainer.innerHTML = ''; // Clear prior
-
-        const data = portfolioData[category] || [];
-
-        let html = '';
-        data.forEach(folder => {
-            // Use properly escaped values for purely string-based quick render
-            html += `
-                <div class="category-card" onclick="window.openGallery('${category}', '${folder.id}')">
-                    <div class="card-bg" style="background-image: url('${folder.thumb}');"></div>
-                    <div class="card-content">
-                        <h3>${folder.name}</h3>
-                    </div>
-                </div>
-            `;
-        });
-        foldersContainer.innerHTML = html;
-
-        window.switchState('folder');
+    // Function to enter folder from portfolio cards
+    window.enterFolder = function(category) {
+        console.log(`Entering folder: ${category}`);
+        window.loadGallery(category);
     };
 
     window.openGallery = function (category, folderId) {
-        const galleryContainer = document.getElementById('gallery-container');
-        const folderTitle = document.getElementById('current-folder');
-
-        if (!galleryContainer || !folderTitle) return;
-
-        const categoryData = portfolioData[category] || [];
-        const folder = categoryData.find(f => f.id === folderId);
-
-        if (!folder) return;
-
-        folderTitle.innerText = folder.name;
-        galleryContainer.innerHTML = ''; // Clear prior
-
-        let html = '';
-        folder.images.forEach(imgSrc => {
-            html += `
-                <div class="gallery-item" onclick="event.stopPropagation(); window.openLightbox('${imgSrc}')">
-                    <img src="${imgSrc}" loading="lazy" decoding="async" alt="Gallery Photo">
-                </div>
-            `;
-        });
-        galleryContainer.innerHTML = html;
-
-        window.switchState('gallery');
+        // Kept for compatibility if called, but redirects to loadGallery logic
+        window.loadGallery(category, folderId);
     };
 
     // --- 5. LIGHTBOX LOGIC ---
@@ -461,15 +383,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const eventDate = formData.get('event_date');
             const msg = formData.get('message');
 
-            // Professional WhatsApp Message Construction
-            // Using *Text* for bold and %0A for new lines
-            const header = `*NEW BOOKING INQUIRY* %0A--------------------------------%0A`;
-            const clientDetails = `*Client:* ${name}%0A*Email:* ${email}%0A`;
-            const eventDetails = `*Event:* ${eventType}%0A*Preferred Date:* ${eventDate}%0A`;
-            const messageBody = `*Message:*%0A${msg}%0A--------------------------------%0A`;
-            const footer = `_Sent via JJ Photography Portfolio Web_`;
-
-            const fullMessage = header + clientDetails + eventDetails + messageBody + footer;
+            // Build a clean plaintext message, then URL-encode once.
+            const fullMessage = [
+                '*NEW BOOKING INQUIRY*',
+                '--------------------------------',
+                `*Client:* ${name}`,
+                `*Email:* ${email}`,
+                `*Event:* ${eventType}`,
+                `*Preferred Date:* ${eventDate}`,
+                '',
+                '*Message:*',
+                msg,
+                '--------------------------------',
+                '_Sent via JJ Photography Portfolio Web_'
+            ].join('\n');
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(fullMessage)}`;
 
             // Redirect smoothly to WhatsApp after a short "premium" delay

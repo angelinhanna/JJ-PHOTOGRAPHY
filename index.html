@@ -31,6 +31,13 @@
                 </div>
                 <div class="logo">JJ PHOTOGRAPHY</div>
             </div>
+            <div class="nav-links">
+                <a href="#hero" onclick="switchState('hero'); return false;">Home</a>
+                <a href="#about" onclick="switchState('about'); return false;">About</a>
+                <a href="#services" onclick="switchState('services'); return false;">Services</a>
+                <a href="#grid" onclick="switchState('grid'); return false;">Portfolio</a>
+                <a href="#contact" onclick="switchState('contact'); return false;">Contact Us</a>
+            </div>
             <div class="nav-extra">
                 <a href="#" class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></a>
                 <div class="hamburger-container" onclick="toggleMenu()">
@@ -42,12 +49,11 @@
         <div id="menu-overlay" class="menu-overlay">
             <button class="menu-close" onclick="toggleMenu()">&times;</button>
             <div class="menu-content">
-                <a href="#" onclick="switchState('hero')">Home</a>
-                <a href="#" onclick="switchState('about')">About Me</a>
-                <a href="#" onclick="switchState('services')">Services</a>
-                <a href="#" onclick="switchState('grid')">Portfolio</a>
-                <a href="#" onclick="switchState('testimonials')">Testimonials</a>
-                <a href="#" onclick="switchState('contact')">Contact</a>
+                <a href="#hero" onclick="switchState('hero'); return false;">Home</a>
+                <a href="#about" onclick="switchState('about'); return false;">About</a>
+                <a href="#services" onclick="switchState('services'); return false;">Services</a>
+                <a href="#grid" onclick="switchState('grid'); return false;">Portfolio</a>
+                <a href="#contact" onclick="switchState('contact'); return false;">Contact Us</a>
             </div>
         </div>
         <section id="hero-state" class="app-state active">
@@ -58,24 +64,12 @@
 
             <div class="hero-content-wrapper">
                 <div class="hero-text">
-                    <h1 class="reveal-text">Capturing <span class="gold-text">Essence</span></h1>
-                    <p class="reveal-text-slow">Premium Photography & Visual Storytelling</p>
+                    <h1 class="reveal-text"><span class="script-text" style="color: #1A1A1A; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);">Capture</span> <span class="script-text" style="color: #1A1A1A; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);">Your Moments</span></h1>
+                    <p class="reveal-text-slow" style="color: #F8F5F2; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);">Premium Photography & Visual Storytelling</p>
                 </div>
                 <div class="portal-menu">
-                    <button class="portal-btn" onclick="switchState('about')">
-                        About Me
-                    </button>
-                    <button class="portal-btn" onclick="switchState('services')">
-                        My Services
-                    </button>
                     <button class="portal-btn" onclick="switchState('grid')">
                         Explore Work
-                    </button>
-                    <button class="portal-btn" onclick="switchState('testimonials')">
-                        Client Stories
-                    </button>
-                    <button class="portal-btn" onclick="switchState('contact')">
-                        Get In Touch
                     </button>
                 </div>
                 <div class="scroll-hint">
@@ -89,9 +83,9 @@
                     <div class="dashboard-grid">
                         <div class="dash-box">
                             <h3>Quick Access</h3>
-                            <a href="#" onclick="switchState('about')">Profile</a>
-                            <a href="#" onclick="switchState('services')">Our Expertise</a>
-                            <a href="#" onclick="switchState('grid')">Visual Vault</a>
+                            <a href="#about" onclick="switchState('about'); return false;">Profile</a>
+                            <a href="#services" onclick="switchState('services'); return false;">Our Expertise</a>
+                            <a href="#grid" onclick="switchState('grid'); return false;">Visual Vault</a>
                         </div>
                         <div class="dash-box">
                             <h3>Reach Me</h3>
@@ -131,6 +125,7 @@
                     <div class="card-bg" style="background-image: url('images/Wedding/Arhana&Megh/RJ-351.jpg');"></div>
                     <div class="card-content">
                         <h3>Wedding</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
 
@@ -139,6 +134,7 @@
                     </div>
                     <div class="card-content">
                         <h3>Pre-Wedding</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
                 <div class="category-card" onclick="enterFolder('Bachelor Party')">
@@ -146,6 +142,7 @@
                     </div>
                     <div class="card-content">
                         <h3>Bachelor Party</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
 
@@ -154,6 +151,7 @@
                     </div>
                     <div class="card-content">
                         <h3>Baby Shower</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
                 <div class="category-card" onclick="enterFolder('Maternity Shoot')">
@@ -161,12 +159,14 @@
                         style="background-image: url('images/Maternity Shoot/Manju/20251115_160751 (2).jpg');"></div>
                     <div class="card-content">
                         <h3>Maternity Shoot</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
                 <div class="category-card" onclick="enterFolder('Portraits')">
                     <div class="card-bg" style="background-image: url('wedd.jpg'); filter: brightness(0.5);"></div>
                     <div class="card-content">
                         <h3>Portraits</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
                 <div class="category-card" onclick="enterFolder('Naming Ceremony')">
@@ -175,12 +175,14 @@
                     </div>
                     <div class="card-content">
                         <h3>Naming Ceremony</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
                 <div class="category-card" onclick="enterFolder('Other Events')">
                     <div class="card-bg" style="background-image: url('hw.jpg');"></div>
                     <div class="card-content">
                         <h3>Other Events</h3>
+                        <div class="portfolio-reveal">Click to View Gallery <i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
             </div>
@@ -232,7 +234,7 @@
                         <div class="hover-reveal">View Details</div>
                     </div>
                     <div class="service-glowing-card" onclick="expandService('Pre Wedding')">
-                        <div class="service-icon-box"><i class="fas fa-heart"></i></div>
+                        <div class="service-icon-box"><i class="fas fa-camera"></i></div>
                         <h3>Pre Wedding</h3>
                         <div class="hover-reveal">View Details</div>
                     </div>
@@ -247,7 +249,7 @@
                         <div class="hover-reveal">View Details</div>
                     </div>
                     <div class="service-glowing-card" onclick="expandService('Maternity Shoot')">
-                        <div class="service-icon-box"><i class="fas fa-ellipsis-h"></i></div>
+                        <div class="service-icon-box"><i class="fas fa-person-pregnant"></i></div>
                         <h3>Maternity Shoot</h3>
                         <div class="hover-reveal">View Details</div>
                     </div>
@@ -259,7 +261,7 @@
 
 
                     <div class="service-glowing-card" onclick="expandService('Other Events')">
-                        <div class="service-icon-box"><i class="fas fa-calendar-star"></i></div>
+                        <div class="service-icon-box"><i class="fas fa-star"></i></div>
                         <h3>Other Events</h3>
                         <div class="hover-reveal">View Details</div>
                     </div>
